@@ -1,3 +1,23 @@
+// Wrapping the element targetting code in this event listen to wait for the HTML to load before exeuting
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("loan-form");
+
+    // Event listener will fire when the user presses the submit button
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Storing the user inputs, parsing the inputs as floats
+        const loanAmount = parseFloat(document.getElementById("loan-amount").value);
+        const loanLength = parseFloat(document.getElementById("loan-length").value);
+        const loanRate = parseFloat(document.getElementById("loan-rate").value);
+
+        // Logging form inputs to confirm they are captured properly
+        console.log("Loan Amount: " + loanAmount);
+        console.log("Loan Length (Years): " + loanLength);
+        console.log("Loan Rate: " + loanRate);
+    });
+});
+
 // Helper function for rate -> decimal format
 function convertRateToDecimal(rate) {
     return rate / 100;
@@ -61,23 +81,7 @@ function tableCalc() {
     return mortgageTable;
 }
 
-// Iterates through array to display all the object values in console
-// Using string interpolation and "toFixed" to truncate values to the hundreths
-function displayTable(table) {
-    for(const row of table) {
-        console.log(`${row.month}
-            ${row.balance.toFixed(2)}
-            ${row.principalAmount.toFixed(2)}
-            ${row.interestAmount.toFixed(2)}
-            ${row.monthlyPayment.toFixed(2)}
-            ${row.totalInterest.toFixed(2)}
-            ${row.totalPaid.toFixed(2)}`);
-    }
-}
-
 function main() {
-    const table = tableCalc();
-    displayTable(table);
 }
 
 // Entry Point
