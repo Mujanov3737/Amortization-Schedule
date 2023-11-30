@@ -50,6 +50,7 @@ td,
 th {
     border: 1px solid rgb(190, 190, 190);
     padding: 10px 20px;
+
 }
 
 /* giving headers a darker color to stand out */
@@ -79,3 +80,8 @@ h1 {
     width: 300px;
     padding: 10px;
 }
+
+/* adding this class as a utility to hide submit button */
+.hidden {
+    visibility: hidden;
+  }
