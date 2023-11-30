@@ -8,6 +8,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <form id="loan-form">
+        <fieldset>
+            <legend>Mortgage Loan Input Form</legend>
+            <ul>
+                <li>
+                    <!-- Type will accept only numerical inputs, ID associates the label with the input-->
+                    <!-- Name can be used to target the element-->
+                    <label for="loan-amount">Loan Amount:</label>
+                    <input type="number" id="loan-amount" name="loan-amount" placeholder="Ex. 160000">
+                </li>
+                <li>
+                    <label for="loan-length">Loan Length (in Years):</label>
+                    <input type="number" id="loan-length" name="loan-length" placeholder="Ex. 15">
+                </li>
+                <li>
+                    <label for="loan-rate">Loan Rate:</label>
+                    <input type="number" id="loan-rate" name="loan-rate" placeholder="Ex. 3.5">
+                </li>
+                <li id="submit">
+                    <button type="submit">Submit</button>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
 </body>
 </html>
