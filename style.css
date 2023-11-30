@@ -24,6 +24,7 @@ label {
 input {
     /* Normalizing font size and font for input elements */
     font: 1em sans-serif;
+    box-sizing: border-box;
     width: 300px;
     border: 1px solid #000000;
 }
@@ -31,7 +32,7 @@ input {
 input:focus {
     /* Clearing default focus pseudo-class options and adding new style */
     outline: none;
-    border: 2px dotted #000000;
+    border: 1px dotted #000000;
 }
   
 

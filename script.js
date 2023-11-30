@@ -11,10 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const loanLength = parseFloat(document.getElementById("loan-length").value);
         const loanRate = parseFloat(document.getElementById("loan-rate").value);
 
-        // Logging form inputs to confirm they are captured properly
-        console.log("Loan Amount: " + loanAmount);
-        console.log("Loan Length (Years): " + loanLength);
-        console.log("Loan Rate: " + loanRate);
+        const table = tableCalc(loanAmount, loanRate, loanLength);
+        displayTable(table);
     });
 });
 
@@ -37,11 +35,11 @@ function monthlyPaymentCalc(principal, lengthYears, rateYearly) {
     return monthlyPayment;
 }
 
-function tableCalc() {
-    // Basic test inputs
-    let initialAmount = 160000;
-    let rateYearly = 3.5;
-    let lengthYears = 15;
+function tableCalc(loanAmount, loanRate, loanLength) {
+    // Storing input arguments
+    let initialAmount = loanAmount;
+    let rateYearly = loanRate;
+    let lengthYears = loanLength;
 
     // Storing monthly payment calculation
     const monthlyPayment = monthlyPaymentCalc(initialAmount, lengthYears, rateYearly);
@@ -81,8 +79,15 @@ function tableCalc() {
     return mortgageTable;
 }
 
-function main() {
+// Returning display table for testing purposes
+function displayTable(table) {
+    for(const row of table) {
+        console.log(`${row.month}
+            ${row.balance.toFixed(2)}
+            ${row.principalAmount.toFixed(2)}
+            ${row.interestAmount.toFixed(2)}
+            ${row.monthlyPayment.toFixed(2)}
+            ${row.totalInterest.toFixed(2)}
+            ${row.totalPaid.toFixed(2)}`);
+    }
 }
-
-// Entry Point
-main();
