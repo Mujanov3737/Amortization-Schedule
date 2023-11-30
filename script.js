@@ -1,6 +1,9 @@
 // Wrapping the element targetting code in this event listen to wait for the HTML to load before exeuting
 document.addEventListener("DOMContentLoaded", function() {
+    // Targetting elements
+    const tableBody = document.querySelector("#mortgage-table tbody");
     const form = document.getElementById("loan-form");
+    const clearBtn = document.getElementById("clear-btn");
 
     // Event listener will fire when the user presses the submit button
     form.addEventListener("submit", function(event) {
@@ -15,9 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Creating the html table with data from tableCalc result
         function populateTable(table) {
-            // Selecting the body portion of the table to populate
-            const tableBody = document.querySelector("#mortgage-table tbody");
-
             // Iterate through each object in the array and perform operations
             table.forEach(function(row) {
                 // Add new row to html table
@@ -35,6 +35,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Call function to create table when submit is pressed
         populateTable(table);
+    });
+
+    // Event listener for clear button
+    clearBtn.addEventListener("click", function(event) {   
+        event.preventDefault();
+        // Iterating through table body and removing children of element  
+        while (tableBody.firstChild) {
+            tableBody.removeChild(tableBody.firstChild);
+        }
     });
 });
 
