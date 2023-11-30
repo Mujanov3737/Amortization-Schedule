@@ -1,0 +1,40 @@
+form {
+    /* This can be used to center the form horizontally on the page */
+    width: 300px;
+    margin: 0 auto;
+}
+
+ul {
+    /* Making the list bullet points invisible */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+form li+li {
+    /* Equal margin spacing, same as on parent element */
+    margin-top: 1em;
+}
+
+label {
+    width: 250px;
+    text-align: left;
+}
+
+input {
+    /* Normalizing font size and font for input elements */
+    font: 1em sans-serif;
+    width: 300px;
+    border: 1px solid #000000;
+}
+
+input:focus {
+    /* Clearing default focus pseudo-class options and adding new style */
+    outline: none;
+    border: 2px dotted #000000;
+}
+  
+
+  
+
+  
