@@ -12,7 +12,29 @@ document.addEventListener("DOMContentLoaded", function() {
         const loanRate = parseFloat(document.getElementById("loan-rate").value);
 
         const table = tableCalc(loanAmount, loanRate, loanLength);
-        displayTable(table);
+        
+        // Creating the html table with data from tableCalc result
+        function populateTable(table) {
+            // Selecting the body portion of the table to populate
+            const tableBody = document.querySelector("#mortgage-table tbody");
+
+            // Iterate through each object in the array and perform operations
+            table.forEach(function(row) {
+                // Add new row to html table
+                const newRow = tableBody.insertRow();
+                // Populate new row with cells from calculated array of objects
+                newRow.insertCell(0).textContent = row.month;
+                newRow.insertCell(1).textContent = row.balance.toFixed(2);
+                newRow.insertCell(2).textContent = row.principalAmount.toFixed(2);
+                newRow.insertCell(3).textContent = row.interestAmount.toFixed(2);
+                newRow.insertCell(4).textContent = row.monthlyPayment.toFixed(2);
+                newRow.insertCell(5).textContent = row.totalInterest.toFixed(2);
+                newRow.insertCell(6).textContent = row.totalPaid.toFixed(2);
+            });
+        }
+
+        // Call function to create table when submit is pressed
+        populateTable(table);
     });
 });
 
@@ -77,17 +99,4 @@ function tableCalc(loanAmount, loanRate, loanLength) {
     }
 
     return mortgageTable;
-}
-
-// Returning display table for testing purposes
-function displayTable(table) {
-    for(const row of table) {
-        console.log(`${row.month}
-            ${row.balance.toFixed(2)}
-            ${row.principalAmount.toFixed(2)}
-            ${row.interestAmount.toFixed(2)}
-            ${row.monthlyPayment.toFixed(2)}
-            ${row.totalInterest.toFixed(2)}
-            ${row.totalPaid.toFixed(2)}`);
-    }
 }
