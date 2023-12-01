@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("loan-form");
     const clearBtn = document.getElementById("clear-btn");
     const submitBtn = document.getElementById("submit");
+    const interestText = document.getElementById("interest-text");
+    const monthlypaymentText = document.getElementById("monthly-payment-text");
+    const dateText = document.getElementById("date-text");
+    const headlineContainer = document.querySelector("headline-container");
 
     let isSubmitted = false;
 
@@ -80,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
             isSubmitted = true;
             submitBtn.classList.add("hidden");
             chart.classList.remove("hidden");   // Show the chart after submission
+            headlineContainer.classList.remove("hidden"); // Show the headline info after submission
 
             // Storing the user inputs, parsing the inputs as floats
             const loanAmount = parseFloat(document.getElementById("loan-amount").value);
@@ -122,6 +127,13 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             // Call function to create table when submit is pressed
             populateTable(table);
+
+            // Accessing the object for the last month
+            const lastMonthData = table[table.length - 1];
+            // Setting headline HTML to corresponding object info from the last month 
+            interestText.textContent = lastMonthData.totalInterest.toFixed(2);
+            monthlypaymentText.textContent = lastMonthData.monthlyPayment.toFixed(2);
+            dateText.textContent = lastMonthData.formattedDate;
         }
     });
 
@@ -136,6 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
         isSubmitted = false;
         submitBtn.classList.remove("hidden");
         chart.classList.add("hidden");  // Hide the table until new data is generated
+        headlineContainer.classList.add("hidden");  // Hide the headline until new data is generated
     });
 });
 
@@ -229,6 +242,7 @@ function updateChart(chart, data) {
     chart.update();
 }
 
+// Formats date objects in a more readable way
 function formatDate(date) {
     let day = date.getDate();
     let month = date.getMonth() + 1;
