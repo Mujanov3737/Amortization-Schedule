@@ -5,7 +5,7 @@ An amortization schedule is a way to track how much money one pays in principal 
 In order to run the project, the style, script, and index files must be included in the same directory. Afterwards, the HTML index file can be opened in a web-browser to be parsed. The script and style files are linked externally in the HTML.
 
 An alternative option is to use an extension such as Live Server in VSCode or Atom Live Server in Atom, which allows for a development localhost server to be conviniently started from the IDE.
-Also note that **chart.js** is used to create the chart within the webpage. It is loaded using a CDN in the HTML using a script element.
+Also note that **chart.js** is used to create the chart within the webpage. It is loaded using a CDN in the HTML using a script element. You can find more information about chart.js here: https://www.chartjs.org/docs/latest/
 ## Project in Action
 The user is presented with a form to input the loan amount, loan length in years, and a loan rate.
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/87afef42-ea61-4ffb-88e5-5ab784470fd2)
