@@ -22,7 +22,7 @@ The chart section displays the principal payment and interest payment for each m
 Below the chart is some important information as a headline, including how much total interest the user will pay by the end of the loan payment, the monthly payment, and the date the loan will be paid off(placeholder date)
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/b6bbdc86-b27d-4922-afeb-0ee1901c5173)
 ***
-The user can now scroll to view the entire loan table that has contains various calculations on a month to month basis, from the total balance, to the total paid amount.
+The user can now scroll to view the entire loan table that contains various calculations on a month to month basis, from the total balance, to the total paid amount.
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/1d7eefbc-7f06-4b8e-ba45-ed635b31022a)
 ***
 If the user wishes to submit another calculation, they can do so by first selecting the 'clear' button in the form, which is reset the data.
