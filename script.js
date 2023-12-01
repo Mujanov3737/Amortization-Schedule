@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const interestText = document.getElementById("interest-text");
     const monthlypaymentText = document.getElementById("monthly-payment-text");
     const dateText = document.getElementById("date-text");
-    const headlineContainer = document.querySelector("headline-container");
+    const headlineContainer = document.querySelector(".headline-container");
 
     let isSubmitted = false;
 
