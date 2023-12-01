@@ -99,12 +99,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     const newRow = tableBody.insertRow();
                     // Populate new row with cells from calculated array of objects
                     newRow.insertCell(0).textContent = row.month;
-                    newRow.insertCell(1).textContent = row.balance.toFixed(2);
-                    newRow.insertCell(2).textContent = row.principalAmount.toFixed(2);
-                    newRow.insertCell(3).textContent = row.interestAmount.toFixed(2);
-                    newRow.insertCell(4).textContent = row.monthlyPayment.toFixed(2);
-                    newRow.insertCell(5).textContent = row.totalInterest.toFixed(2);
-                    newRow.insertCell(6).textContent = row.totalPaid.toFixed(2);
+                    newRow.insertCell(1).textContent = row.formattedDate;
+                    newRow.insertCell(2).textContent = row.balance.toFixed(2);
+                    newRow.insertCell(3).textContent = row.principalAmount.toFixed(2);
+                    newRow.insertCell(4).textContent = row.interestAmount.toFixed(2);
+                    newRow.insertCell(5).textContent = row.monthlyPayment.toFixed(2);
+                    newRow.insertCell(6).textContent = row.totalPrincipal.toFixed(2);
+                    newRow.insertCell(7).textContent = row.totalInterest.toFixed(2);
+                    newRow.insertCell(8).textContent = row.totalPaid.toFixed(2);
 
                     // Storing relevant data as an object for each iteration to be used in chart
                     chartData.push({
@@ -169,7 +171,9 @@ function tableCalc(loanAmount, loanRate, loanLength) {
     let payments = lengthYears * 12;    // How many monthly payments there will be
     let balance = initialAmount;        // Tracking loan balance remaining
     let totalInterest = 0;              // Tracking total interest and cumulative paid
+    let totalPrincipal = 0;
     let totalPaid = 0;
+    let date = new Date();
 
     const mortgageTable = [];   // Storing each calculation in an array for use in generating table
 
@@ -178,20 +182,28 @@ function tableCalc(loanAmount, loanRate, loanLength) {
         const interestAmount = balance * rateMonthly;   // Interest will go down the more the loan is paid off
         const principalAmount = monthlyPayment - interestAmount; // Principal is the monthly payment before interest
 
-        // Total interest paid and total cumulative paid over the course of the entire loan
+        // Total interest, principal, and total cumulative paid over the course of the entire loan
         totalInterest = totalInterest + interestAmount;
+        totalPrincipal = totalPrincipal + principalAmount;
         totalPaid = totalPaid + monthlyPayment;
 
         // Subtracting balance from principal paid
         balance = balance - principalAmount;
 
+        // Add 1 month to the date
+        date.setMonth(date.getMonth() + 1);
+        formattedDate = formatDate(date);
+
+
         // Adding this iteration of values as an object to the table array
         mortgageTable.push({
             month,
+            formattedDate,
             balance,
             principalAmount,
             interestAmount,
             monthlyPayment,
+            totalPrincipal,
             totalInterest,
             totalPaid
         })
@@ -215,4 +227,12 @@ function updateChart(chart, data) {
     chart.data.datasets[1].data = interestAmount;
     chart.data.datasets[2].data = monthlyPayment;
     chart.update();
+}
+
+function formatDate(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
 }
