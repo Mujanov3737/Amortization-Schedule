@@ -9,20 +9,20 @@ Also note that **chart.js** is used to create the chart within the webpage. It i
 ## Project in Action
 The user is presented with a form to input the loan amount, loan length in years, and a loan rate.
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/87afef42-ea61-4ffb-88e5-5ab784470fd2)
-
+---
 Upon entering this information and selecting submit, the table will be populated, chart will be generated, and some select important data will be displayed as a headline.
 ![mort_1](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/7afc94a3-0da7-4fea-a7b0-9b333fa63dff)
-
+---
 The chart section displays the principal payment and interest payment for each month in a line chart. This way, the user can see how their interest payments decrease over time, while principal payments increase. These payments can be compared to the total monthly payment amount present in the chart as well.
-
+---
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/8fe52fd9-83c7-4000-91b7-ce46a300a46a)
-
+---
 Below the chart is some important information as a headline, including how much total interest the user will pay by the end of the loan payment, the monthly payment, and the date the loan will be paid off(placeholder date)
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/b6bbdc86-b27d-4922-afeb-0ee1901c5173)
-
+---
 The user can now scroll to view the entire loan table that has contains various calculations on a month to month basis, from the total balance, to the total paid amount.
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/1d7eefbc-7f06-4b8e-ba45-ed635b31022a)
-
+---
 If the user wishes to submit another calculation, they can do so by first selecting the 'clear' button in the form, which is reset the data.
 ![mort_2](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/26b87937-bc39-47a3-9dae-1cdb6b77fe27)
 
