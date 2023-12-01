@@ -25,7 +25,7 @@ input {
     /* Normalizing font size and font for input elements */
     font: 1em sans-serif;
     box-sizing: border-box;
-    width: 300px;
+    width: 250px;
     border: 1px solid #000000;
 }
 
@@ -41,6 +41,7 @@ table {
     border: 2px solid rgb(200, 200, 200);
     letter-spacing: 1px;
     font-size: 0.8rem;
+    font-family: sans-serif;
     margin-left: auto;
     margin-right: auto;
 }
@@ -76,6 +77,9 @@ caption {
 }
 
 h1 {
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: center;
     margin: 0 auto;
     width: 300px;
     padding: 10px;

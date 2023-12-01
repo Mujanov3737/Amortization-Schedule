@@ -1,10 +1,40 @@
 // Wrapping the element targetting code in this event listen to wait for the HTML to load before exeuting
 document.addEventListener("DOMContentLoaded", function() {
+
     // Targetting elements
     const tableBody = document.querySelector("#mortgage-table tbody");
     const form = document.getElementById("loan-form");
     const clearBtn = document.getElementById("clear-btn");
     const submitBtn = document.getElementById("submit");
+
+    // Using Chart.JS to present a graphical version of the data
+    // Selecting context for the chart and constructing a new line chart
+    const chart = document.getElementById('mortgage-chart').getContext('2d');
+    const mortgageChart = new Chart(chart, {
+        type: 'line',
+        data:{
+            labels:[],
+            datasets: [{ 
+                data: [],
+                borderColor: "red",
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000',
+                fill: false
+              }]
+        },
+        options:{
+            plugins:{
+                title:{
+                    display:true,
+                    text:'Mortgage Loan Chart',
+                    font: {
+                        size: 20,
+                        family: 'sans-serif'
+                    }
+                }
+            }
+        }
+    });
 
     let isSubmitted = false;
 
@@ -23,6 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
             const loanRate = parseFloat(document.getElementById("loan-rate").value);
 
             const table = tableCalc(loanAmount, loanRate, loanLength);
+
+            // Variables to pass into chart once populated
+            let chartLabels = [];
+            let chartData = [];
         
             // Creating the html table with data from tableCalc result
             function populateTable(table) {
@@ -38,7 +72,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     newRow.insertCell(4).textContent = row.monthlyPayment.toFixed(2);
                     newRow.insertCell(5).textContent = row.totalInterest.toFixed(2);
                     newRow.insertCell(6).textContent = row.totalPaid.toFixed(2);
-            });
+
+                    // Saving month and balance information for use in chart
+                    chartLabels.push(row.month);
+                    chartData.push(row.balance);
+                });
+
+                // Updating chart with table information
+                updateChart(mortgageChart, chartLabels, chartData);
             }
 
             // Call function to create table when submit is pressed
@@ -120,4 +161,11 @@ function tableCalc(loanAmount, loanRate, loanLength) {
     }
 
     return mortgageTable;
+}
+
+// Updating the chart to reflect submitted calculations
+function updateChart(chart, labels, data) {
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.update();
 }
