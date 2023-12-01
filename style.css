@@ -89,3 +89,7 @@ h1 {
 .hidden {
     visibility: hidden;
   }
+
+canvas {
+    margin: 0 auto;
+}

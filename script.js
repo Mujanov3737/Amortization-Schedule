@@ -16,13 +16,46 @@ document.addEventListener("DOMContentLoaded", function() {
             labels:[],
             datasets: [{ 
                 data: [],
+                label: 'Principal Payment',
                 borderColor: "red",
                 hoverBorderWidth: 3,
                 hoverBorderColor: '#000',
                 fill: false
-              }]
+              },
+              {
+                data: [],
+                label: 'Interest Payment',
+                borderColor: "blue",
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000',
+                fill: false
+              },
+              {
+                data: [],
+                label: 'Monthly Payment',
+                borderColor: "green",
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000',
+                fill: false
+              }
+            ]
         },
         options:{
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: 'Amount'
+                    }
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Months'
+                    }
+                  }
+            },
             plugins:{
                 title:{
                     display:true,
@@ -54,8 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const table = tableCalc(loanAmount, loanRate, loanLength);
 
-            // Variables to pass into chart once populated
-            let chartLabels = [];
+            // Array to hold chart data
             let chartData = [];
         
             // Creating the html table with data from tableCalc result
@@ -73,15 +105,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     newRow.insertCell(5).textContent = row.totalInterest.toFixed(2);
                     newRow.insertCell(6).textContent = row.totalPaid.toFixed(2);
 
-                    // Saving month and balance information for use in chart
-                    chartLabels.push(row.month);
-                    chartData.push(row.balance);
+                    // Storing relevant data as an object for each iteration to be used in chart
+                    chartData.push({
+                        month: row.month,
+                        principalAmount: row.principalAmount,
+                        interestAmount: row.interestAmount,
+                        monthlyPayment: row.monthlyPayment
+                    });
                 });
 
                 // Updating chart with table information
-                updateChart(mortgageChart, chartLabels, chartData);
+                updateChart(mortgageChart, chartData);
             }
-
             // Call function to create table when submit is pressed
             populateTable(table);
         }
@@ -164,8 +199,18 @@ function tableCalc(loanAmount, loanRate, loanLength) {
 }
 
 // Updating the chart to reflect submitted calculations
-function updateChart(chart, labels, data) {
+function updateChart(chart, data) {
+
+    // Iterating over each object in the data array and mapping the values to a separate array
+    const labels = data.map(item => item.month);
+    const principalAmount = data.map(item => item.principalAmount);
+    const interestAmount = data.map(item => item.interestAmount);
+    const monthlyPayment = data.map(item => item.monthlyPayment);
+
+    // Passing data to chart object
     chart.data.labels = labels;
-    chart.data.datasets[0].data = data;
+    chart.data.datasets[0].data = principalAmount;
+    chart.data.datasets[1].data = interestAmount;
+    chart.data.datasets[2].data = monthlyPayment;
     chart.update();
 }
