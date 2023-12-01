@@ -14,6 +14,7 @@ Upon entering this information and selecting submit, the table will be populated
 ![mort_1](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/7afc94a3-0da7-4fea-a7b0-9b333fa63dff)
 
 The chart section displays the principal payment and interest payment for each month in a line chart. This way, the user can see how their interest payments decrease over time, while principal payments increase. These payments can be compared to the total monthly payment amount present in the chart as well.
+
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/8fe52fd9-83c7-4000-91b7-ce46a300a46a)
 
 Below the chart is some important information as a headline, including how much total interest the user will pay by the end of the loan payment, the monthly payment, and the date the loan will be paid off(placeholder date)
