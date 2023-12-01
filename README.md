@@ -4,9 +4,9 @@ An amortization schedule is a way to track how much money one pays in principal 
 
 Here is some more information on amortization: https://www.investopedia.com/terms/a/amortization.asp
 ## Running the Project
-In order to run the project, the style, script, and index files must be included in the same directory. Afterwards, the HTML index file can be opened in a web-browser to be parsed. The script and style files are linked externally in the HTML.
+In order to run the project, it can be downloaded as a zip or cloned. The style, script, and index files must be included in the same directory before running. Afterwards, the HTML index file can be opened in a web-browser to be parsed. The script and style files are linked externally in the HTML.
 
-An alternative option is to use an extension such as Live Server in VSCode or Atom Live Server in Atom, which allows for a development localhost server to be conviniently started from the IDE.
+An alternative option is to use an IDE extension such as Live Server in VSCode or Atom Live Server in Atom, which allows for a development localhost server to be conviniently started from the IDE. VSCode and LiveServer were used entirely during the development of this project.
 Also note that **chart.js** is used to create the chart within the webpage. It is loaded using a CDN in the HTML using a script element. You can find more information about chart.js here: https://www.chartjs.org/docs/latest/
 ## Project in Action
 The user is presented with a form to input the loan amount, loan length in years, and a loan rate.
