@@ -93,3 +93,12 @@ h1 {
 canvas {
     margin: 0 auto;
 }
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    font-size: 20px;
+    font-family: sans-serif;
+}
