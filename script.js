@@ -35,41 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const loanRate = parseFloat(document.getElementById("loan-rate").value);
 
             const table = tableCalc(loanAmount, loanRate, loanLength);
-
-            // Array to hold chart data
-            let chartData = [];
-        
-            // Creating the html table with data from tableCalc result
-            function populateTable(table) {
-                // Iterate through each object in the array and perform operations
-                table.forEach(function(row) {
-                    // Add new row to html table
-                    const newRow = tableBody.insertRow();
-                    // Populate new row with cells from calculated array of objects
-                    newRow.insertCell(0).textContent = row.month;
-                    newRow.insertCell(1).textContent = row.formattedDate;
-                    newRow.insertCell(2).textContent = row.balance.toFixed(2);
-                    newRow.insertCell(3).textContent = row.principalAmount.toFixed(2);
-                    newRow.insertCell(4).textContent = row.interestAmount.toFixed(2);
-                    newRow.insertCell(5).textContent = row.monthlyPayment.toFixed(2);
-                    newRow.insertCell(6).textContent = row.totalPrincipal.toFixed(2);
-                    newRow.insertCell(7).textContent = row.totalInterest.toFixed(2);
-                    newRow.insertCell(8).textContent = row.totalPaid.toFixed(2);
-
-                    // Storing relevant data as an object for each iteration to be used in chart
-                    chartData.push({
-                        month: row.month,
-                        principalAmount: row.principalAmount,
-                        interestAmount: row.interestAmount,
-                        monthlyPayment: row.monthlyPayment
-                    });
-                });
-
-                // Updating chart with table information
-                updateChart(mortgageChart, chartData);
-            }
-            // Call function to create table when submit is pressed
-            populateTable(table);
+            populateTable(table, tableBody);   // Generate Table
+            updateChart(mortgageChart, populateChartData(table));   // Updating chart with table information
 
             // Accessing the object for the last month
             const lastMonthData = table[table.length - 1];
@@ -192,6 +159,36 @@ function formatDate(date) {
     let year = date.getFullYear();
 
     return `${month}/${day}/${year}`;
+}
+
+// Creating the html table with data from tableCalc result
+function populateTable(table, tableBody) {
+    // Iterate through each object in the array and perform operations
+    table.forEach(function(row) {
+        // Add new row to html table
+        const newRow = tableBody.insertRow();
+        // Populate new row with cells from calculated array of objects
+        newRow.insertCell(0).textContent = row.month;
+        newRow.insertCell(1).textContent = row.formattedDate;
+        newRow.insertCell(2).textContent = row.balance.toFixed(2);
+        newRow.insertCell(3).textContent = row.principalAmount.toFixed(2);
+        newRow.insertCell(4).textContent = row.interestAmount.toFixed(2);
+        newRow.insertCell(5).textContent = row.monthlyPayment.toFixed(2);
+        newRow.insertCell(6).textContent = row.totalPrincipal.toFixed(2);
+        newRow.insertCell(7).textContent = row.totalInterest.toFixed(2);
+        newRow.insertCell(8).textContent = row.totalPaid.toFixed(2);
+    });
+}
+
+// Iterating over the collection to return an array that has the data needed for the chart
+function populateChartData(table) {
+    // Storing relevant data as an object for each iteration to be used in chart
+    return table.map(row => ({
+        month: row.month,
+        principalAmount: row.principalAmount,
+        interestAmount: row.interestAmount,
+        monthlyPayment: row.monthlyPayment
+    }));
 }
 
 // This function passes in the context for the canvas and creates a chart
