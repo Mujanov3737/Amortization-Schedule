@@ -1,64 +1,65 @@
-// Wrapping the element targetting code in this event listen to wait for the HTML to load before exeuting
+// Wrapping the element targetting code in this eventlistenr to wait for the HTML to load before exeuting
 document.addEventListener("DOMContentLoaded", function() {
 
     let isSubmitted = false;
 
-    // Targetting elements
-    const tableBody = document.querySelector("#mortgage-table tbody");
-    const form = document.getElementById("loan-form");
-    const clearBtn = document.getElementById("clear-btn");
-    const submitBtn = document.getElementById("submit");
-    const interestText = document.getElementById("interest-text");
-    const monthlypaymentText = document.getElementById("monthly-payment-text");
-    const dateText = document.getElementById("date-text");
-    const headlineContainer = document.querySelector(".headline-container");
+    // Helper function for targetting DOM elements and storing into an object
+    function getDomElements() {
+        return {
+            tableBody: document.querySelector("#mortgage-table tbody"),
+            form: document.getElementById("loan-form"),
+            clearBtn: document.getElementById("clear-btn"),
+            submitBtn: document.getElementById("submit"),
+            interestText: document.getElementById("interest-text"),
+            monthlyPaymentText: document.getElementById("monthly-payment-text"),
+            dateText: document.getElementById("date-text"),
+            headlineContainer: document.querySelector(".headline-container"),
+            chart: document.getElementById('mortgage-chart')
+        };
+    }
+
+    // Storing the DOM element targets into variables
+    const { tableBody, 
+            form, 
+            clearBtn, 
+            submitBtn, 
+            interestText, 
+            monthlyPaymentText, 
+            dateText, 
+            headlineContainer, 
+            chart } = getDomElements();
 
     // Using Chart.JS to present a graphical version of the data
-    // Selecting context for the chart and constructing a new line chart
-    const chart = document.getElementById('mortgage-chart');
+    // Constructing a new line chart
     const mortgageChart = createChart(chart);
     
     // Event listener will fire when the user presses the submit button
     form.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        // Wrapping submit code in if statement to hide button after submission occurs
+        // Wrapping submit code in if statement to hide elements depending on submission status
         if(!isSubmitted) {
+            // Passing DOM elements into this function for processing
+            processFormSubmission(tableBody, 
+                chart, 
+                headlineContainer, 
+                submitBtn, 
+                interestText, 
+                monthlyPaymentText, 
+                dateText, 
+                mortgageChart);
+
             isSubmitted = true;
-            submitBtn.classList.add("hidden");
-            chart.classList.remove("hidden");   // Show the chart after submission
-            headlineContainer.classList.remove("hidden"); // Show the headline info after submission
-
-            // Storing the user inputs, parsing the inputs as floats
-            const loanAmount = parseFloat(document.getElementById("loan-amount").value);
-            const loanLength = parseFloat(document.getElementById("loan-length").value);
-            const loanRate = parseFloat(document.getElementById("loan-rate").value);
-
-            const table = tableCalc(loanAmount, loanRate, loanLength);
-            populateTable(table, tableBody);   // Generate Table
-            updateChart(mortgageChart, populateChartData(table));   // Updating chart with table information
-
-            // Accessing the object for the last month
-            const lastMonthData = table[table.length - 1];
-            // Setting headline HTML to corresponding object info from the last month 
-            interestText.textContent = lastMonthData.totalInterest.toFixed(2);
-            monthlypaymentText.textContent = lastMonthData.monthlyPayment.toFixed(2);
-            dateText.textContent = lastMonthData.formattedDate;
         }
     });
 
     // Event listener for clear button
     clearBtn.addEventListener("click", function(event) {   
         event.preventDefault();
-        // Iterating through table body and removing children of element  
-        while (tableBody.firstChild) {
-            tableBody.removeChild(tableBody.firstChild);
-        }
-        // After the clear, make the submit button visible again
+        // Clearing UI after clear button is pressed
+        resetUI(tableBody, chart, headlineContainer, submitBtn);
+        // After the clear, flag the submission as false again
         isSubmitted = false;
-        submitBtn.classList.remove("hidden");
-        chart.classList.add("hidden");  // Hide the table until new data is generated
-        headlineContainer.classList.add("hidden");  // Hide the headline until new data is generated
     });
 });
 
@@ -81,6 +82,7 @@ function monthlyPaymentCalc(principal, lengthYears, rateYearly) {
     return monthlyPayment;
 }
 
+// Primary calculation function for generating the core amortization schedule data and storing into an array
 function tableCalc(loanAmount, loanRate, loanLength) {
     // Storing input arguments
     let initialAmount = loanAmount;
@@ -116,7 +118,6 @@ function tableCalc(loanAmount, loanRate, loanLength) {
         // Add 1 month to the date
         date.setMonth(date.getMonth() + 1);
         formattedDate = formatDate(date);
-
 
         // Adding this iteration of values as an object to the table array
         mortgageTable.push({
@@ -189,6 +190,60 @@ function populateChartData(table) {
         interestAmount: row.interestAmount,
         monthlyPayment: row.monthlyPayment
     }));
+}
+
+// Updates the view with the calculated submission data
+function processFormSubmission(tableBody, chart, headlineContainer, submitBtn, interestText, monthlyPaymentText, dateText, mortgageChart) {
+    // Hide the submit button and disable the hidden attribute on the chart and headlines
+    hideElement(submitBtn);
+    showElement(chart);
+    showElement(headlineContainer);
+
+    // Storing the user inputs, parsing the inputs as floats
+    const loanAmount = parseFloat(document.getElementById("loan-amount").value);
+    const loanLength = parseFloat(document.getElementById("loan-length").value);
+    const loanRate = parseFloat(document.getElementById("loan-rate").value);
+
+    const table = tableCalc(loanAmount, loanRate, loanLength);
+    populateTable(table, tableBody); // Generate Table
+    updateChart(mortgageChart, populateChartData(table));   // Updating chart with table information
+
+    // Accessing the object for the last month
+    const lastMonthData = table[table.length - 1];  
+    updateHeadline(interestText, monthlyPaymentText, dateText, lastMonthData);
+}
+
+// Clears parts of the view
+function resetUI(tableBody, chart, headlineContainer, submitBtn) {
+    // Clearing table 
+    while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+    // Making submit button visible again and hiding the headlines and chart
+    submitBtn.classList.remove("hidden");
+    chart.classList.add("hidden");
+    headlineContainer.classList.add("hidden");
+}
+
+// Helper functions
+function showElement(element) {
+    if (element) {
+        element.classList.remove("hidden");
+    }
+}
+
+function hideElement(element) {
+    if (element) {
+        element.classList.add("hidden");
+    }
+}
+
+// Uses data from the last object in the main table array to update the headline text in the view
+function updateHeadline(interestText, monthlypaymentText, dateText, lastMonthData) {
+    // Setting headline HTML to corresponding object info from the last month 
+    interestText.textContent = lastMonthData.totalInterest.toFixed(2);
+    monthlypaymentText.textContent = lastMonthData.monthlyPayment.toFixed(2);
+    dateText.textContent = lastMonthData.formattedDate;
 }
 
 // This function passes in the context for the canvas and creates a chart
