@@ -25,7 +25,7 @@ Below the chart is some important information as a headline, including how much 
 The user can now scroll to view the entire loan table that contains various calculations on a month to month basis, from the total balance, to the total paid amount.
 ![image](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/1d7eefbc-7f06-4b8e-ba45-ed635b31022a)
 ***
-If the user wishes to submit another calculation, they can do so by first selecting the 'clear' button in the form, which is reset the data.
+If the user wishes to submit another calculation, they can do so by first selecting the 'clear' button in the form, which will reset the data.
 ![mort_2](https://github.com/Mujanov3737/Amortization-Schedule/assets/75598761/26b87937-bc39-47a3-9dae-1cdb6b77fe27)
 
 
