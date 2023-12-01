@@ -7,9 +7,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const clearBtn = document.getElementById("clear-btn");
     const submitBtn = document.getElementById("submit");
 
+    let isSubmitted = false;
+
     // Using Chart.JS to present a graphical version of the data
     // Selecting context for the chart and constructing a new line chart
-    const chart = document.getElementById('mortgage-chart').getContext('2d');
+    const chart = document.getElementById('mortgage-chart');
     const mortgageChart = new Chart(chart, {
         type: 'line',
         data:{
@@ -69,8 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    let isSubmitted = false;
-
     // Event listener will fire when the user presses the submit button
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -79,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if(!isSubmitted) {
             isSubmitted = true;
             submitBtn.classList.add("hidden");
+            chart.classList.remove("hidden");   // Show the chart after submission
 
             // Storing the user inputs, parsing the inputs as floats
             const loanAmount = parseFloat(document.getElementById("loan-amount").value);
@@ -132,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // After the clear, make the submit button visible again
         isSubmitted = false;
         submitBtn.classList.remove("hidden");
+        chart.classList.add("hidden");  // Hide the table until new data is generated
     });
 });
 
