@@ -1,6 +1,8 @@
 // Wrapping the element targetting code in this event listen to wait for the HTML to load before exeuting
 document.addEventListener("DOMContentLoaded", function() {
 
+    let isSubmitted = false;
+
     // Targetting elements
     const tableBody = document.querySelector("#mortgage-table tbody");
     const form = document.getElementById("loan-form");
@@ -11,70 +13,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const dateText = document.getElementById("date-text");
     const headlineContainer = document.querySelector(".headline-container");
 
-    let isSubmitted = false;
-
     // Using Chart.JS to present a graphical version of the data
     // Selecting context for the chart and constructing a new line chart
     const chart = document.getElementById('mortgage-chart');
-    const mortgageChart = new Chart(chart, {
-        type: 'line',
-        data:{
-            labels:[],
-            datasets: [{ 
-                data: [],
-                label: 'Principal Payment',
-                borderColor: "red",
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000',
-                fill: false
-              },
-              {
-                data: [],
-                label: 'Interest Payment',
-                borderColor: "blue",
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000',
-                fill: false
-              },
-              {
-                data: [],
-                label: 'Monthly Payment',
-                borderColor: "green",
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#000',
-                fill: false
-              }
-            ]
-        },
-        options:{
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                      display: true,
-                      text: 'Amount'
-                    }
-                  },
-                  x: {
-                    title: {
-                      display: true,
-                      text: 'Months'
-                    }
-                  }
-            },
-            plugins:{
-                title:{
-                    display:true,
-                    text:'Mortgage Loan Chart',
-                    font: {
-                        size: 20,
-                        family: 'sans-serif'
-                    }
-                }
-            }
-        }
-    });
-
+    const mortgageChart = createChart(chart);
+    
     // Event listener will fire when the user presses the submit button
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -249,4 +192,68 @@ function formatDate(date) {
     let year = date.getFullYear();
 
     return `${month}/${day}/${year}`;
+}
+
+// This function passes in the context for the canvas and creates a chart
+function createChart(chart) {
+    const mortgageChart = new Chart(chart, {
+        type: 'line',
+        data:{
+            labels:[],
+            datasets: [{ 
+                data: [],
+                label: 'Principal Payment',
+                borderColor: "red",
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000',
+                fill: false
+              },
+              {
+                data: [],
+                label: 'Interest Payment',
+                borderColor: "blue",
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000',
+                fill: false
+              },
+              {
+                data: [],
+                label: 'Monthly Payment',
+                borderColor: "green",
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#000',
+                fill: false
+              }
+            ]
+        },
+        options:{
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: 'Amount'
+                    }
+                  },
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Months'
+                    }
+                  }
+            },
+            plugins:{
+                title:{
+                    display:true,
+                    text:'Mortgage Loan Chart',
+                    font: {
+                        size: 20,
+                        family: 'sans-serif'
+                    }
+                }
+            }
+        }
+    });
+
+    return mortgageChart;
 }
